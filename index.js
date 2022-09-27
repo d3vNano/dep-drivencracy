@@ -48,7 +48,8 @@ server.get("/poll", (req, res) => {
 });
 
 server.post("/choice", (req, res) => {
-    const { title, pollId } = req.body;
+    const { title } = req.body;
+    const { pollId } = db.collection("poll");
 
     if (!title) {
         res.sendStatus(422);
@@ -71,7 +72,7 @@ server.get("/poll/:id/choice", (req, res) => {
     const { id } = req.params;
 
     db.collection("poll")
-        .findOne({ _id: new ObjectId(id) })
+        .findOne({ _id: ObjectId(id) })
         .then((poll) => {
             res.send(poll);
             console.log(id);
